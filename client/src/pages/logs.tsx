@@ -1,11 +1,24 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { ActivityLog } from "@shared/schema";
+import { Sidebar } from "@/components/sidebar";
 
 export default function LogsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,13 +26,14 @@ export default function LogsPage() {
   const [typeFilter, setTypeFilter] = useState<string>("all");
 
   const { data: logs = [], isLoading } = useQuery<ActivityLog[]>({
-    queryKey: ["/api/logs"]
+    queryKey: ["/api/logs"],
   });
 
-  const filteredLogs = logs.filter(log => {
-    const matchesSearch = !searchTerm || 
+  const filteredLogs = logs.filter((log) => {
+    const matchesSearch =
+      !searchTerm ||
       log.message.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesStatus = statusFilter === "all"; // ActivityLog doesn't have status field
     const matchesType = typeFilter === "all" || log.type === typeFilter;
 
@@ -29,15 +43,34 @@ export default function LogsPage() {
   const getStatusBadge = (type: string) => {
     switch (type) {
       case "task_executed":
-        return <Badge variant="default" className="bg-green-600">Executado</Badge>;
+        return (
+          <Badge variant="default" className="bg-green-600">
+            Executado
+          </Badge>
+        );
       case "task_failed":
         return <Badge variant="destructive">Falhou</Badge>;
       case "task_started":
-        return <Badge variant="outline" className="border-blue-500 text-blue-600">Iniciado</Badge>;
+        return (
+          <Badge variant="outline" className="border-blue-500 text-blue-600">
+            Iniciado
+          </Badge>
+        );
       case "task_stopped":
-        return <Badge variant="outline" className="border-yellow-500 text-yellow-600">Parado</Badge>;
+        return (
+          <Badge
+            variant="outline"
+            className="border-yellow-500 text-yellow-600"
+          >
+            Parado
+          </Badge>
+        );
       default:
-        return <Badge variant="secondary">{type.replace('task_', '').replace('_', ' ')}</Badge>;
+        return (
+          <Badge variant="secondary">
+            {type.replace("task_", "").replace("_", " ")}
+          </Badge>
+        );
     }
   };
 
@@ -68,7 +101,8 @@ export default function LogsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+    <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
+      <Sidebar />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -98,7 +132,7 @@ export default function LogsPage() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              
+
               <div>
                 <label className="text-sm font-medium mb-2 block">Status</label>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
@@ -161,10 +195,9 @@ export default function LogsPage() {
                 Nenhum log encontrado
               </h3>
               <p className="text-gray-500 dark:text-gray-500">
-                {logs.length === 0 
-                  ? "Não há logs para exibir ainda" 
-                  : "Tente ajustar os filtros para encontrar logs específicos"
-                }
+                {logs.length === 0
+                  ? "Não há logs para exibir ainda"
+                  : "Tente ajustar os filtros para encontrar logs específicos"}
               </p>
             </CardContent>
           </Card>
@@ -176,16 +209,20 @@ export default function LogsPage() {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-3 mb-2">
-                        <i className={`${getTypeIcon(log.type)} text-gray-500`}></i>
+                        <i
+                          className={`${getTypeIcon(log.type)} text-gray-500`}
+                        ></i>
                         <span className="font-medium text-gray-900 dark:text-white">
                           Sistema
                         </span>
                         {getStatusBadge(log.type)}
                         <span className="text-sm text-gray-500">
-                          {log.createdAt ? new Date(log.createdAt).toLocaleString('pt-BR') : 'Data não disponível'}
+                          {log.createdAt
+                            ? new Date(log.createdAt).toLocaleString("pt-BR")
+                            : "Data não disponível"}
                         </span>
                       </div>
-                      
+
                       <p className="text-gray-700 dark:text-gray-300 mb-2">
                         {log.message}
                       </p>
@@ -196,16 +233,20 @@ export default function LogsPage() {
                             Ver detalhes
                           </summary>
                           <pre className="mt-2 p-3 bg-gray-100 dark:bg-gray-800 rounded text-xs overflow-auto">
-                            {typeof log.details === 'string' ? log.details : JSON.stringify(log.details, null, 2)}
+                            {typeof log.details === "string"
+                              ? log.details
+                              : JSON.stringify(log.details, null, 2)}
                           </pre>
                         </details>
                       )}
 
-                      {log.details && typeof log.details === 'object' && 'duration' in log.details && (
-                        <div className="mt-2 text-xs text-gray-500">
-                          Duração: {(log.details as any).duration}ms
-                        </div>
-                      )}
+                      {log.details &&
+                        typeof log.details === "object" &&
+                        "duration" in log.details && (
+                          <div className="mt-2 text-xs text-gray-500">
+                            Duração: {(log.details as any).duration}ms
+                          </div>
+                        )}
                     </div>
                   </div>
                 </CardContent>
