@@ -70,11 +70,11 @@ export function Sidebar() {
                   className={cn(
                     "flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                     item.isActive
-                      ? "text-primary bg-primary/10"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "text-primary bg-primary/10 shadow-sm"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   )}
                 >
-                  <i className={cn(item.icon, "mr-3", item.isActive ? "text-primary" : "text-gray-400")}></i>
+                  <i className={cn(item.icon, "mr-3 w-5 text-center", item.isActive ? "text-primary" : "text-gray-500 dark:text-gray-400")}></i>
                   {item.label}
                 </Link>
               </li>
@@ -91,9 +91,9 @@ export function Sidebar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                 >
-                  <i className={cn(item.icon, "mr-3 text-gray-400")}></i>
+                  <i className={cn(item.icon, "mr-3 w-5 text-center text-gray-500 dark:text-gray-400")}></i>
                   {item.label}
                 </Link>
               </li>
@@ -109,7 +109,7 @@ export function Sidebar() {
             }}
             className="flex items-center w-full px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
           >
-            <i className="fas fa-sign-out-alt mr-3"></i>
+            <i className="fas fa-sign-out-alt mr-3 w-5 text-center"></i>
             Sair do Sistema
           </button>
         </div>
