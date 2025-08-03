@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sidebar } from "@/components/sidebar";
+import logoUrl from "@assets/logo_1754255525697.png";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -38,6 +39,7 @@ export function Layout({ children, title, description, actions }: LayoutProps) {
               >
                 <i className="fas fa-bars"></i>
               </Button>
+              <img src={logoUrl} alt="Logo" className="w-8 h-8 lg:hidden" />
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{title}</h2>
                 {description && (

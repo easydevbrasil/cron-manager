@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
+import logoUrl from "@assets/logo_1754255525697.png";
 
 export function Sidebar() {
   const [location] = useLocation();
@@ -48,9 +49,7 @@ export function Sidebar() {
     <aside className="w-64 bg-white dark:bg-gray-900 shadow-lg border-r border-gray-200 dark:border-gray-700 hidden lg:block">
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-            <i className="fas fa-clock text-primary-foreground text-lg"></i>
-          </div>
+          <img src={logoUrl} alt="Cron Manager Logo" className="w-10 h-10" />
           <div>
             <h1 className="text-xl font-bold text-gray-900 dark:text-white">Cron Manager</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">Sistema de Tarefas</p>
