@@ -8,11 +8,7 @@ export function authenticateApiKey(req: AuthenticatedRequest, res: Response, nex
   const apiKey = req.headers['x-api-key'] || req.query.apiKey;
   const expectedApiKey = process.env.CRON_API_KEY || "cron_manager_api_key_2025";
 
-  console.log('Auth Debug:', {
-    receivedKey: apiKey ? `${String(apiKey).substring(0, 10)}...` : 'none',
-    expectedKey: expectedApiKey ? `${expectedApiKey.substring(0, 10)}...` : 'none',
-    match: apiKey === expectedApiKey
-  });
+
 
   if (!apiKey) {
     return res.status(401).json({ 

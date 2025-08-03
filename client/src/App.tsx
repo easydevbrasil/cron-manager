@@ -6,6 +6,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ApiKeyLogin } from "@/components/api-key-login";
 import Dashboard from "@/pages/dashboard";
+import TasksPage from "@/pages/tasks";
+import LogsPage from "@/pages/logs";  
+import WebhooksPage from "@/pages/webhooks";
+import SettingsPage from "@/pages/settings";
 import ApiDocs from "@/pages/api-docs";
 import NotFound from "@/pages/not-found";
 
@@ -25,6 +29,10 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Dashboard} />
+      <Route path="/tasks" component={TasksPage} />
+      <Route path="/logs" component={LogsPage} />
+      <Route path="/webhooks" component={WebhooksPage} />
+      <Route path="/settings" component={SettingsPage} />
       <Route path="/api-docs" component={ApiDocs} />
       <Route component={NotFound} />
     </Switch>
