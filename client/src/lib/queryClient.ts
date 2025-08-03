@@ -7,13 +7,17 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+function getApiKey() {
+  return localStorage.getItem("cron_api_key") || "";
+}
+
 export async function apiRequest(
   method: string,
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
   const headers: Record<string, string> = {
-    "X-API-Key": "cron_manager_api_key_2025"
+    "X-API-Key": getApiKey()
   };
   
   if (data) {
@@ -39,7 +43,7 @@ export const getQueryFn: <T>(options: {
   async ({ queryKey }) => {
     const res = await fetch(queryKey.join("/") as string, {
       headers: {
-        "X-API-Key": "cron_manager_api_key_2025"
+        "X-API-Key": getApiKey()
       },
       credentials: "include",
     });

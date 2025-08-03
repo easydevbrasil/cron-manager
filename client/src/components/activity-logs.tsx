@@ -13,7 +13,7 @@ export function ActivityLogs() {
     queryFn: async () => {
       const response = await fetch("/api/logs", {
         headers: {
-          "X-API-Key": "cron_manager_api_key_2025"
+          "X-API-Key": localStorage.getItem("cron_api_key") || ""
         }
       });
       return response.json();

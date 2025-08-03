@@ -33,9 +33,9 @@ export function Sidebar() {
 
   const configItems = [
     {
-      href: "/api-keys",
-      icon: "fas fa-key",
-      label: "Chaves API"
+      href: "/api-docs",
+      icon: "fas fa-code",
+      label: "API & Docs"
     },
     {
       href: "/settings",
@@ -100,6 +100,19 @@ export function Sidebar() {
               </li>
             ))}
           </ul>
+        </div>
+        
+        <div className="px-6 mt-8">
+          <button
+            onClick={() => {
+              localStorage.removeItem("cron_api_key");
+              window.location.reload();
+            }}
+            className="flex items-center w-full px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+          >
+            <i className="fas fa-sign-out-alt mr-3"></i>
+            Sair do Sistema
+          </button>
         </div>
       </nav>
       
