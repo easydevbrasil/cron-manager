@@ -6,7 +6,7 @@ export interface AuthenticatedRequest extends Request {
 
 export function authenticateApiKey(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const apiKey = req.headers['x-api-key'] || req.query.apiKey;
-  const expectedApiKey = process.env.CRON_API_KEY || "cron_manager_api_key_2025";
+  const expectedApiKey = process.env.API_KEY || "cron_manager_api_key_2025";
 
 
 
