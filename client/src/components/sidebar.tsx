@@ -8,25 +8,25 @@ export function Sidebar() {
   const menuItems = [
     {
       href: "/",
-      icon: "fas fa-th-large",
+      icon: "fas fa-chart-pie",
       label: "Dashboard",
       isActive: location === "/"
     },
     {
       href: "/tasks",
-      icon: "fas fa-tasks",
+      icon: "fas fa-clock",
       label: "Tarefas Cron",
       isActive: location === "/tasks"
     },
     {
       href: "/logs",
-      icon: "fas fa-history",
+      icon: "fas fa-list-alt",
       label: "Logs de Atividade",
       isActive: location === "/logs"
     },
     {
       href: "/webhooks",
-      icon: "fas fa-link",
+      icon: "fas fa-plug",
       label: "Webhooks",
       isActive: location === "/webhooks"
     }
@@ -35,12 +35,12 @@ export function Sidebar() {
   const configItems = [
     {
       href: "/api-docs",
-      icon: "fas fa-code",
+      icon: "fas fa-book",
       label: "API & Docs"
     },
     {
       href: "/settings",
-      icon: "fas fa-cog",
+      icon: "fas fa-sliders-h",
       label: "Configurações"
     }
   ];
@@ -74,7 +74,7 @@ export function Sidebar() {
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   )}
                 >
-                  <i className={cn(item.icon, "mr-3 w-5 text-center", item.isActive ? "text-primary" : "text-gray-500 dark:text-gray-400")}></i>
+                  <i className={cn(item.icon, "mr-3 w-5 text-center text-base", item.isActive ? "text-primary" : "text-gray-600 dark:text-gray-400")}></i>
                   {item.label}
                 </Link>
               </li>
@@ -93,7 +93,7 @@ export function Sidebar() {
                   href={item.href}
                   className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                 >
-                  <i className={cn(item.icon, "mr-3 w-5 text-center text-gray-500 dark:text-gray-400")}></i>
+                  <i className={cn(item.icon, "mr-3 w-5 text-center text-base text-gray-600 dark:text-gray-400")}></i>
                   {item.label}
                 </Link>
               </li>
