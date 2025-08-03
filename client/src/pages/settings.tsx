@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { Layout } from "@/components/layout";
 
 export default function SettingsPage() {
   const { toast } = useToast();
@@ -83,20 +84,26 @@ export default function SettingsPage() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Configurações
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Configure as preferências e parâmetros do sistema
-          </p>
-        </div>
+  const headerActions = (
+    <div className="flex space-x-2">
+      <Button variant="outline" onClick={resetSettings}>
+        <i className="fas fa-undo mr-2"></i>
+        Resetar
+      </Button>
+      <Button onClick={saveSettings}>
+        <i className="fas fa-save mr-2"></i>
+        Salvar
+      </Button>
+    </div>
+  );
 
-        <div className="space-y-6">
+  return (
+    <Layout 
+      title="Configurações"
+      description="Configure as preferências e parâmetros do sistema"
+      actions={headerActions}
+    >
+      <div className="space-y-6">
           {/* Email Settings */}
           <Card>
             <CardHeader>
@@ -384,20 +391,7 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
 
-          {/* Action Buttons */}
-          <div className="flex items-center justify-between">
-            <Button variant="outline" onClick={resetSettings}>
-              <i className="fas fa-undo mr-2"></i>
-              Resetar Configurações
-            </Button>
-
-            <Button onClick={saveSettings}>
-              <i className="fas fa-save mr-2"></i>
-              Salvar Configurações
-            </Button>
-          </div>
         </div>
-      </div>
-    </div>
+    </Layout>
   );
 }

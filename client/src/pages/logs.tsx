@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { ActivityLog } from "@shared/schema";
-import { Sidebar } from "@/components/sidebar";
+import { Layout } from "@/components/layout";
 
 export default function LogsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -91,28 +91,25 @@ export default function LogsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <i className="fas fa-spinner fa-spin text-4xl text-gray-400 mb-4"></i>
-          <p className="text-gray-600 dark:text-gray-400">Carregando logs...</p>
+      <Layout 
+        title="Logs de Atividade"
+        description="Histórico completo de execuções e eventos do sistema"
+      >
+        <div className="flex items-center justify-center min-h-64">
+          <div className="text-center">
+            <i className="fas fa-spinner fa-spin text-4xl text-gray-400 mb-4"></i>
+            <p className="text-gray-600 dark:text-gray-400">Carregando logs...</p>
+          </div>
         </div>
-      </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
-      <Sidebar />
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Logs de Atividade
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Histórico completo de execuções e eventos do sistema
-          </p>
-        </div>
+    <Layout 
+      title="Logs de Atividade"
+      description="Histórico completo de execuções e eventos do sistema"
+    >
 
         {/* Filters */}
         <Card className="mb-6">
@@ -242,9 +239,10 @@ export default function LogsPage() {
 
                       {log.details &&
                         typeof log.details === "object" &&
+                        log.details !== null &&
                         "duration" in log.details && (
                           <div className="mt-2 text-xs text-gray-500">
-                            Duração: {(log.details as any).duration}ms
+                            Duração: {String((log.details as Record<string, unknown>).duration)}ms
                           </div>
                         )}
                     </div>
@@ -254,7 +252,6 @@ export default function LogsPage() {
             ))}
           </div>
         )}
-      </div>
-    </div>
+    </Layout>
   );
 }

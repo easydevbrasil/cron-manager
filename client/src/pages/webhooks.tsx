@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { CronTask } from "@shared/schema";
+import { Layout } from "@/components/layout";
 
 export default function WebhooksPage() {
   const [testUrl, setTestUrl] = useState("");
@@ -51,17 +52,10 @@ export default function WebhooksPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Webhooks
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Configure e monitore webhooks para suas tarefas cron
-          </p>
-        </div>
+    <Layout 
+      title="Webhooks"
+      description="Configure e monitore webhooks para suas tarefas cron"
+    >
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           {/* Webhook Info */}
@@ -235,7 +229,6 @@ export default function WebhooksPage() {
             </Card>
           </div>
         </div>
-      </div>
-    </div>
+    </Layout>
   );
 }
