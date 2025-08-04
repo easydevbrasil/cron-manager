@@ -73,6 +73,9 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ENV NODE_ENV=production
 ENV PORT=5000
 ENV HOST=0.0.0.0
+ENV SESSION_SECRET="AqR0qvJ7iJBf3ups3LsIuqCJj6VgGQzo"
+ENV APP_NAME="Cron Task Management System"
+ENV APP_URL=${APP_URL:-http://localhost:8080}
 
 # Start supervisor to manage multiple processes
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -1,46 +1,6 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
-  postgres:
-    image: postgres:15-alpine
-    container_name: cron-manager-db
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: cronmanager
-      POSTGRES_USER: cronuser
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cronpass123}
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
-    ports:
-      - "5432:5432"
-    networks:
-      - cron-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cronuser -d cronmanager"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # Redis for caching and session storage (optional)
-  redis:
-    image: redis:7-alpine
-    container_name: cron-manager-redis
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - cron-network
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 3s
-      retries: 3
-
   # Main Application
   app:
     build:
@@ -51,41 +11,17 @@ services:
     ports:
       - "8080:5000"
     environment:
-      # Database Configuration
       DATABASE_URL: postgresql://cronuser:${POSTGRES_PASSWORD:-cronpass123}@postgres:5432/cronmanager
-      PGDATABASE: cronmanager
-      PGHOST: postgres
-      PGPORT: 5432
-      PGUSER: cronuser
-      PGPASSWORD: ${POSTGRES_PASSWORD:-cronpass123}
-      
-      # Application Configuration
-      NODE_ENV: production
-      PORT: 5000
-      HOST: 0.0.0.0
-      
-      # Security
-      SESSION_SECRET: ${SESSION_SECRET:-your-super-secret-session-key-change-in-production}
-      API_KEY: ${API_KEY:-cron-manager-api-key-2025}
-      
-      # Optional Email Configuration
+      API_KEY: "KAIPETJZVHYGBGVVBKHSSBSLAFWNZZRQTITQODYTLTHYJMFOJNHRMVSQPBKKKETB"
       SMTP_HOST: ${SMTP_HOST:-}
       SMTP_PORT: ${SMTP_PORT:-587}
       SMTP_SECURE: ${SMTP_SECURE:-false}
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASS: ${SMTP_PASS:-}
       EMAIL_FROM: ${EMAIL_FROM:-noreply@cronmanager.com}
-      EMAIL_FROM_NAME: ${EMAIL_FROM_NAME:-Cron Manager}
-      
-      # Optional Webhook Configuration
+      EMAIL_FROM_NAME: "Cron Manager"
+      APP_URL: "http://localhost:8080"
       WEBHOOK_SECRET: ${WEBHOOK_SECRET:-webhook-secret-key}
-      
-      # Application Settings
-      APP_NAME: "Cron Task Management System"
-      APP_URL: ${APP_URL:-http://localhost:8080}
-      
-      # Redis Configuration (optional)
-      REDIS_URL: redis://redis:6379
       
       # Logging
       LOG_LEVEL: ${LOG_LEVEL:-info}
@@ -114,25 +50,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-
-  # Nginx Reverse Proxy (optional)
-  nginx:
-    image: nginx:alpine
-    container_name: cron-manager-nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./ssl:/etc/nginx/ssl:ro
-    networks:
-      - cron-network
-    depends_on:
-      - app
-    profiles:
-      - nginx
-
 volumes:
   postgres_data:
     driver: local
